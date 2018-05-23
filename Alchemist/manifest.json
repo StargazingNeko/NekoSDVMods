@@ -1,0 +1,10 @@
+{
+  "Name": "Alchemist",
+  "Author": "StargazingNeko",
+  "Version": "1.0.0",
+  "Description": "A mod that adds alchemy. Create better potions and transmute items.",
+  "UniqueID": "StargazingNeko.Alchemist",
+  "EntryDll": "Alchemist.dll",
+  "MinimumApiVersion": "2.5.2",
+  "UpdateKeys": []
+}
