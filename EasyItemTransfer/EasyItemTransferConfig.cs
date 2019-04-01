@@ -4,13 +4,13 @@ namespace EasyItemTransfer
 {
     public class EasyItemTransferConfig
     {
-        public Keys transferKey { get; set; }
-        public Keys transferAllKey { get; set; }
+        public Keys TransferKey { get; set; }
+        public Keys TransferAllKey { get; set; }
 
         public EasyItemTransferConfig()
         {
-            this.transferKey = Keys.LeftShift;
-            this.transferAllKey = Keys.Space;
+            this.TransferKey = Keys.LeftShift;
+            this.TransferAllKey = Keys.Space;
         }
     }
 }
