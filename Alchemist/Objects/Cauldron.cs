@@ -1,19 +1,26 @@
-﻿using PyTK.CustomElementHandler;
+﻿using System.Collections.Generic;
+
+using Microsoft.Xna.Framework.Graphics;
+
 using StardewValley;
 using StardewValley.Tools;
-using System.Collections.Generic;
+
+
 
 
 namespace Alchemist.Objects
 {
 
-    public abstract class Cauldron : Tool, ISaveElement
+    public class Cauldron : Object
     {
         public Cauldron() : base()
         {
             this.Name = "Cauldron";
-            this.description = "";
-            this.Stackable = false;
+            //this.description = "A pot used for alchemical brewery.";
+            type.Value = "interactive";
+            this.CanBeSetDown = true;
+            this.Category = BigCraftableCategory;
+
         }
         
          protected override string loadDisplayName()
@@ -21,12 +28,22 @@ namespace Alchemist.Objects
              return Name;
          }
 
-         protected override string loadDescription()
-         {
-             return description;
-         }        
+        public override bool canBeGivenAsGift()
+        {
+            return false;
+        }
 
-         public Dictionary<string, string> getAdditionalSaveData()
+        public override bool canBeShipped()
+        {
+            return false;
+        }
+
+        public override bool canBeTrashed()
+        {
+            return true;
+        }
+
+        public Dictionary<string, string> GetAdditionalSaveData()
          {
              Dictionary<string, string> savedata = new Dictionary<string, string>
              {
@@ -35,13 +52,13 @@ namespace Alchemist.Objects
              return savedata;
          }
 
-         public dynamic getReplacement()
+         public dynamic GetReplacement()
          {
              FishingRod replacement = new FishingRod();
              return replacement;
          }
 
-         public void rebuild(Dictionary<string, string> additionalSaveData, object replacement)
+         public void Rebuild(Dictionary<string, string> additionalSaveData, object replacement)
          {
              this.Name = additionalSaveData["name"];
          }

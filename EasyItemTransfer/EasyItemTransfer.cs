@@ -17,23 +17,22 @@ namespace EasyItemTransfer
         public override void Entry(IModHelper helper)
         {
             Config = helper.ReadConfig<EasyItemTransferConfig>();
-            GameEvents.UpdateTick += UpdateTickEvent;
-
+            Helper.Events.GameLoop.UpdateTicked += UpdateTickEvent;
         }
 
 
         private void UpdateTickEvent(object sender, EventArgs e)
         {
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-            KeyUp(currentKeyboardState);
+            bool isTransferKeyPressed = Helper.Input.IsDown(Config.TransferKey.ToSButton());
+            bool isTransferAllKeyPressed = Helper.Input.IsDown(Config.TransferAllKey.ToSButton());
+            Transfer(isTransferKeyPressed);
+            TransferAll(isTransferAllKeyPressed);
         }
         
-        private void KeyUp(KeyboardState currentKeyboardState)
+        private void Transfer(bool keyPressed)
         {
-
             IList<Item> PlayerInventory = Game1.player.Items;
-
-            if (currentKeyboardState.IsKeyDown(this.Config.transferKey))
+            if (keyPressed)
             {
                 Chest OpenChest = GetOpenChest();
                 if (OpenChest == null)
@@ -59,9 +58,12 @@ namespace EasyItemTransfer
                     }
                 }
             }
+        }
 
-            
-            if (currentKeyboardState.IsKeyDown(this.Config.transferAllKey))
+        private void TransferAll(bool keyPressed)
+        {
+            IList<Item> PlayerInventory = Game1.player.Items;
+            if (keyPressed)
             {
                 Chest OpenChest = GetOpenChest();
                 if (OpenChest == null)
@@ -76,9 +78,7 @@ namespace EasyItemTransfer
                         continue;
 
                     OpenChest.grabItemFromInventory(playerItem, Game1.player);
-                    {
-                        break;
-                    }                    
+                    break;
                 }
             }
         }
